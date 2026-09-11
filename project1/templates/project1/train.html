@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Train a Model</h2>
+  {% if error %}
+    <p style="color:red;">{{ error }}
+      <a href="{% url 'project1:upload' %}">Upload a CSV first</a>.
+    </p>
+  {% else %}
+  <p>Problem type: <strong>{{ problem_type }}</strong></p>
+  <form method="post">
+    {% csrf_token %}
+    <label>Algorithm:</label>
+    <select name="model">
+      <option value="knn">K-Nearest Neighbors</option>
+      <option value="svm">Support Vector Machine</option>
+      <option value="tree">Decision Tree</option>
+    </select>
+    <label>Test set size:</label>
+    <select name="test_size">
+      <option value="0.1">10%</option>
+      <option value="0.2" selected>20%</option>
+      <option value="0.3">30%</option>
+    </select>
+    <br><br>
+    <button type="submit" class="btn">Train & Evaluate</button>
+  </form>
+  {% endif %}
+</div>
+
+{% if score_plot %}
+<div class="card">
+  <h3>Results — {{ model_name }}</h3>
+  <p><strong>Best parameter:</strong> {{ best_param }} &nbsp;
+     <strong>Best score:</strong> {{ best_score }}</p>
+  <img src="data:image/png;base64,{{ score_plot }}" style="max-width:100%;">
+</div>
+{% endif %}
+{% endblock %}

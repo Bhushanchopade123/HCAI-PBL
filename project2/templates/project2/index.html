@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">Project 2 — Explainability</div>
+  </div>
+  <p>Explore model interpretability, counterfactual explanations and feature effects on the Palmer Penguins dataset.</p>
+  <div class="button-container" style="margin-top:20px;">
+    <a href="{% url 'project2:tree' %}"><button>🌳 Decision Tree</button></a>
+    <a href="{% url 'project2:logistic' %}"><button>📈 Logistic Regression</button></a>
+    <a href="{% url 'project2:counterfactual' %}"><button>🔄 Counterfactuals</button></a>
+    <a href="{% url 'project2:feature_effects' %}"><button>📊 Feature Effects</button></a>
+  </div>
+</div>
+{% endblock %}

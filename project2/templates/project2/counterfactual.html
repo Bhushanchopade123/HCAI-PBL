@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">🔄 Counterfactual Explanations</div>
+  </div>
+
+  <form method="get">
+    <label>Model:</label>
+    <select name="model" onchange="this.form.submit()">
+      <option value="tree" {% if model_type == 'tree' %}selected{% endif %}>Decision Tree</option>
+      <option value="logistic" {% if model_type == 'logistic' %}selected{% endif %}>Logistic Regression</option>
+    </select>
+    &nbsp;&nbsp;
+    <label>λ:</label>
+    <input type="number" name="lambda" value="{{ lam }}" step="0.01" min="0" max="2" style="width:70px;">
+    &nbsp;&nbsp;
+    <label>Sample index (0 to {{ n_samples }}):</label>
+    <input type="number" name="sample_idx" value="{{ sample_idx }}" min="0" max="{{ n_samples }}" style="width:70px;">
+    &nbsp;&nbsp;
+    <label>Target species:</label>
+    <select name="target">
+      {% for s in species_names %}
+      <option value="{{ forloop.counter0 }}"
+        {% if forloop.counter0 == target_cls %}selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+    <br><br>
+    <button type="submit">Generate Counterfactuals</button>
+  </form>
+
+  {% if selected_point %}
+  <h3>Selected Point (index {{ sample_idx }})</h3>
+  <p><strong>Actual class:</strong> {{ actual_class }}</p>
+  <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+    <tr style="background:#275CB2; color:white;">
+      {% for k, v in selected_point.items %}<th>{{ k }}</th>{% endfor %}
+    </tr>
+    <tr>
+      {% for k, v in selected_point.items %}<td>{{ v }}</td>{% endfor %}
+    </tr>
+  </table>
+
+  <h3>Top Counterfactuals → target: <strong>{{ target_name }}</strong></h3>
+  {% if counterfactuals %}
+  <table border="1" cellpadding="6" cellspacing="0" style="border-collapse:collapse;">
+    <tr style="background:#275CB2; color:white;">
+      {% for k in counterfactuals.0.values.keys %}<th>{{ k }}</th>{% endfor %}
+      <th>Distance</th>
+    </tr>
+    {% for cf in counterfactuals %}
+    <tr>
+      {% for v in cf.values.values %}<td>{{ v }}</td>{% endfor %}
+      <td>{{ cf.distance }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p style="color:orange;">No counterfactuals found. Try a different sample or target.</p>
+  {% endif %}
+  {% endif %}
+</div>
+{% endblock %}

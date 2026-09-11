@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">Project 4 — Preference Elicitation</div>
+  </div>
+  <p>A movie recommender system that learns your preferences through interactive elicitation.
+     This project compares two methods: pairwise comparisons and full rankings.</p>
+  <div class="button-container" style="margin-top:20px;">
+    <a href="{% url 'project4:study' %}"><button>🎬 Start User Study</button></a>
+    <a href="{% url 'project4:report' %}"><button>📄 Download Report</button></a>
+  </div>
+</div>
+{% endblock %}

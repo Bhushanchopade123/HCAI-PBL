@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">🌳 Decision Tree</div>
+  </div>
+
+  <h2>Task 1 — Single Tree</h2>
+  <p><strong>Test Accuracy:</strong> {{ acc }} &nbsp;&nbsp;
+     <strong>Number of Leaves:</strong> {{ n_leaves }}</p>
+  <img src="data:image/png;base64,{{ tree_plot }}" style="max-width:100%;">
+
+  <h2>Task 2 — Regularization Slider (λ)</h2>
+  <form method="get">
+    <label>λ = <strong>{{ lam }}</strong></label><br><br>
+    <input type="range" name="lambda" min="0" max="0.5" step="0.01"
+           value="{{ lam }}"
+           oninput="this.nextElementSibling.value=this.value"
+           onchange="this.form.submit()">
+    <output>{{ lam }}</output>
+    <br><br>
+    <p>Best model: <strong>{{ best_leaves }} leaves</strong> &nbsp;&nbsp;
+       Accuracy: <strong>{{ best_acc }}</strong></p>
+  </form>
+
+  <img src="data:image/png;base64,{{ acc_plot }}" style="max-width:100%;">
+
+  <h3>Best Tree Structure</h3>
+  <img src="data:image/png;base64,{{ best_tree_plot }}" style="max-width:100%;">
+
+  <div style="margin-top:20px; display:flex; gap:10px;">
+    <a href="{% url 'project2:counterfactual' %}?model=tree&lambda={{ lam }}"><button>🔄 Counterfactuals</button></a>
+    <a href="{% url 'project2:feature_effects' %}?model=tree&lambda={{ lam }}"><button>📊 Feature Effects</button></a>
+  </div>
+</div>
+{% endblock %}

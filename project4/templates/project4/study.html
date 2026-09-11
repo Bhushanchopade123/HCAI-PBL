@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">Choose Your Study Design</div>
+  </div>
+  <p>Please select one of the two preference elicitation methods below.
+     Both will learn your movie preferences and recommend films you might enjoy.</p>
+
+  <div style="display:flex; gap:2rem; margin-top:2rem; flex-wrap:wrap;">
+
+    <div style="flex:1; min-width:260px; background:#f5f8ff; border:2px solid #275CB2;
+                border-radius:8px; padding:1.5rem;">
+      <h3 style="color:#275CB2;">Design 1 — Pairwise Comparison</h3>
+      <p>You will be shown <strong>2 movies at a time</strong> and asked to pick which one
+         you would rather watch. This repeats 10 times.</p>
+      <p><em>Simple and quick — one decision at a time.</em></p>
+      <a href="{% url 'project4:pairwise' %}"><button>Start Design 1</button></a>
+    </div>
+
+    <div style="flex:1; min-width:260px; background:#f5fff5; border:2px solid #2ca02c;
+                border-radius:8px; padding:1.5rem;">
+      <h3 style="color:#2ca02c;">Design 2 — Ranking</h3>
+      <p>You will be shown <strong>10 movies at a time</strong> and asked to drag and drop
+         them into your preferred order. This repeats 3 times.</p>
+      <p><em>More information per round — gives richer preference data.</em></p>
+      <a href="{% url 'project4:ranking' %}"><button style="background:#2ca02c;">Start Design 2</button></a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

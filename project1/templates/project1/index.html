@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h1>Project 1 — Supervised Learning</h1>
+  <p>Upload a dataset, visualize it, and train machine learning models.</p>
+  <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+    <a href="{% url 'project1:upload' %}" class="btn">Upload & Visualize</a>
+    <a href="{% url 'project1:train' %}" class="btn">Train a Model</a>
+  </div>
+</div>
+{% endblock %}

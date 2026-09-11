@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Upload Dataset</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>Select CSV file:</label><br><br>
+    <input type="file" name="csv_file" accept=".csv" required>
+    {% if features %}
+    <br><br>
+    <label>X axis:</label>
+    <select name="feat_x">
+      {% for f in features %}
+      <option value="{{ f }}" {% if f == feat_x %}selected{% endif %}>{{ f }}</option>
+      {% endfor %}
+    </select>
+    <label>Y axis:</label>
+    <select name="feat_y">
+      {% for f in features %}
+      <option value="{{ f }}" {% if f == feat_y %}selected{% endif %}>{{ f }}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+    <br><br>
+    <button type="submit" class="btn">Upload & Visualize</button>
+  </form>
+</div>
+
+{% if features %}
+<div class="card">
+  <h3>Dataset Info</h3>
+  <p><strong>Rows:</strong> {{ n_rows }} &nbsp;
+     <strong>Features:</strong> {{ n_features }} &nbsp;
+     <strong>Label:</strong> {{ label }} &nbsp;
+     <strong>Type:</strong> {{ problem_type }}</p>
+  {{ head|safe }}
+</div>
+<div class="card">
+  <h3>Scatter Plot</h3>
+  <img src="data:image/png;base64,{{ plot }}" style="max-width:100%;">
+</div>
+<a href="{% url 'project1:train' %}" class="btn">Go to Model Training</a>
+{% endif %}
+{% endblock %}

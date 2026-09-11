@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">4️⃣ Active Learning (Task 4)</div>
+  </div>
+  <p>Strategy: <strong>uncertainty sampling</strong> — query the expert on the points where the classifier is least confident, compared against a random-query baseline.</p>
+
+  <form method="get">
+    <label>Total expert queries:</label>
+    <select name="n_queries" onchange="this.form.submit()">
+      <option value="50" {% if n_total == 50 %}selected{% endif %}>50</option>
+      <option value="100" {% if n_total == 100 %}selected{% endif %}>100</option>
+      <option value="200" {% if n_total == 200 %}selected{% endif %}>200</option>
+      <option value="400" {% if n_total == 400 %}selected{% endif %}>400</option>
+    </select>
+  </form>
+
+  <h3>Accuracy after just the first 10 queries</h3>
+  <ul>
+    <li><strong>Uncertainty sampling:</strong> {{ early_acc_uncertainty }}</li>
+    <li><strong>Random sampling:</strong> {{ early_acc_random }}</li>
+  </ul>
+
+  <h3>Final team accuracy after {{ n_total }} queries</h3>
+  <ul>
+    <li><strong>Uncertainty sampling:</strong> {{ final_acc_uncertainty }}</li>
+    <li><strong>Random sampling:</strong> {{ final_acc_random }}</li>
+  </ul>
+
+  <img src="data:image/png;base64,{{ plot }}" style="max-width:100%;">
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">Project 3 — Active Learning for Learning-to-Defer</div>
+  </div>
+  <p>Train a classifier on AG News, simulate a human expert, learn when to defer to them, and actively choose which examples to query.</p>
+  <div class="button-container" style="margin-top:20px;">
+    <a href="{% url 'project3:baseline' %}"><button>1️⃣ Baseline Classifier</button></a>
+    <a href="{% url 'project3:expert' %}"><button>2️⃣ Simulated Expert</button></a>
+    <a href="{% url 'project3:defer' %}"><button>3️⃣ Learning to Defer</button></a>
+    <a href="{% url 'project3:active_learning' %}"><button>4️⃣ Active Learning</button></a>
+    <a href="{% url 'project3:report' %}"><button>📄 Download Report</button></a>
+  </div>
+</div>
+{% endblock %}

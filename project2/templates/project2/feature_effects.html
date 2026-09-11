@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">📊 Feature Effect Plots</div>
+  </div>
+
+  <form method="get">
+    <label>Model:</label>
+    <select name="model" onchange="this.form.submit()">
+      <option value="tree" {% if model_type == 'tree' %}selected{% endif %}>Decision Tree</option>
+      <option value="logistic" {% if model_type == 'logistic' %}selected{% endif %}>Logistic Regression</option>
+    </select>
+    &nbsp;&nbsp;
+    <label>λ:</label>
+    <input type="number" name="lambda" value="{{ lam }}" step="0.01" min="0" max="2" style="width:70px;">
+    &nbsp;&nbsp;
+    <label>Feature:</label>
+    <select name="feature" onchange="this.form.submit()">
+      {% for f in numerical_cols %}
+      <option value="{{ f }}" {% if f == selected_feat %}selected{% endif %}>{{ f }}</option>
+      {% endfor %}
+    </select>
+    <br><br>
+    <button type="submit">Show Plots</button>
+  </form>
+
+  {% if pdp_plot %}
+  <h3>PDP — {{ selected_feat }}</h3>
+  <p>Shows the average effect of the feature on predicted probability for each species.</p>
+  <img src="data:image/png;base64,{{ pdp_plot }}" style="max-width:100%;">
+
+  <h3>ALE — {{ selected_feat }}</h3>
+  <p>Shows the accumulated local effect of the feature, accounting for feature correlations.</p>
+  <img src="data:image/png;base64,{{ ale_plot }}" style="max-width:100%;">
+  {% endif %}
+</div>
+{% endblock %}

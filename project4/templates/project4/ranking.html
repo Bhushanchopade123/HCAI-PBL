@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">Design 2 - Ranking</div>
+  </div>
+  <p style="text-align:center;">Round {{ round }} of {{ max_rounds }} - Drag movies from most to least preferred.</p>
+  <ul id="sortable" style="list-style:none; padding:0; margin:1rem 0;">
+    {% for m in movies %}
+    <li data-idx="{{ m.idx }}" style="background:#f5f8ff; border:2px solid #275CB2; border-radius:8px; padding:1rem; margin-bottom:0.6rem; cursor:grab;">
+      <strong>{{ m.title }}</strong> ({{ m.year }}) - {{ m.genres }} - IMDB: {{ m.score }}
+    </li>
+    {% endfor %}
+  </ul>
+  <form method="post" action="{% url 'project4:submit_ranking' %}" id="ranking-form">
+    {% csrf_token %}
+    <input type="hidden" name="ranked_order" id="ranked_order">
+    <button type="submit" onclick="return collectRanking()">Submit Ranking</button>
+  </form>
+  <p style="text-align:center; color:#666;">Round {{ round }} of {{ max_rounds }}</p>
+</div>
+<script>
+var dragged = null;
+document.querySelectorAll('#sortable li').forEach(function(li) {
+  li.setAttribute('draggable', true);
+  li.addEventListener('dragstart', function(e) { dragged = li; li.style.opacity = '0.5'; });
+  li.addEventListener('dragend', function(e) { li.style.opacity = '1'; dragged = null; });
+  li.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    var rect = li.getBoundingClientRect();
+    var after = e.clientY > rect.top + rect.height / 2;
+    if (dragged !== li) { li.parentNode.insertBefore(dragged, after ? li.nextSibling : li); }
+  });
+});
+function collectRanking() {
+  var items = document.querySelectorAll('#sortable li');
+  var order = Array.from(items).map(function(li) { return li.dataset.idx; });
+  document.getElementById('ranked_order').value = order.join(',');
+  return true;
+}
+</script>
+{% endblock %}

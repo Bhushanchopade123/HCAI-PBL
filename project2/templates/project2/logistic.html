@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">📈 Logistic Regression</div>
+  </div>
+
+  <h2>Task 3 — Regularization Slider (λ)</h2>
+  <form method="get">
+    <label>λ = <strong>{{ lam }}</strong></label><br><br>
+    <input type="range" name="lambda" min="0" max="2" step="0.05"
+           value="{{ lam }}"
+           oninput="this.nextElementSibling.value=this.value"
+           onchange="this.form.submit()">
+    <output>{{ lam }}</output>
+    <br><br>
+    <p>Best model: <strong>C = {{ best_C }}</strong> &nbsp;&nbsp;
+       Accuracy: <strong>{{ best_acc }}</strong> &nbsp;&nbsp;
+       Complexity (Ω): <strong>{{ best_omega }}</strong></p>
+  </form>
+
+  <img src="data:image/png;base64,{{ acc_plot }}" style="max-width:100%;">
+
+  <div style="margin-top:20px; display:flex; gap:10px;">
+    <a href="{% url 'project2:counterfactual' %}?model=logistic&lambda={{ lam }}"><button>🔄 Counterfactuals</button></a>
+    <a href="{% url 'project2:feature_effects' %}?model=logistic&lambda={{ lam }}"><button>📊 Feature Effects</button></a>
+  </div>
+</div>
+{% endblock %}

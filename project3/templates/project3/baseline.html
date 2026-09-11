@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">1️⃣ Baseline Classifier (Task 1)</div>
+  </div>
+  <p>TF-IDF + Logistic Regression trained on {{ n_train }} AG News articles, evaluated on {{ n_test }} held-out test articles.</p>
+  <p><strong>Overall test accuracy:</strong> {{ test_acc }}</p>
+
+  <h3>Per-class accuracy</h3>
+  <ul>
+    {% for cls, acc in per_class_acc.items %}
+    <li>{{ cls }}: {{ acc }}</li>
+    {% endfor %}
+  </ul>
+
+  <img src="data:image/png;base64,{{ plot }}" style="max-width:100%;">
+</div>
+{% endblock %}

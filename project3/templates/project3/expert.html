@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">2️⃣ Simulated Expert (Task 2)</div>
+  </div>
+  <p>The simulated expert is designed to mimic a human with uneven domain knowledge:
+     strong on <strong>{{ strong_classes|join:", " }}</strong>,
+     weak on <strong>{{ weak_classes|join:", " }}</strong>.</p>
+
+  <p><strong>Overall expert accuracy:</strong> {{ overall_acc }}</p>
+
+  <h3>Per-class accuracy</h3>
+  <ul>
+    {% for cls, acc in per_class_acc.items %}
+    <li>{{ cls }}: {{ acc }}</li>
+    {% endfor %}
+  </ul>
+
+  <img src="data:image/png;base64,{{ plot }}" style="max-width:100%;">
+</div>
+{% endblock %}

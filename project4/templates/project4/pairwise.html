@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">Design 1 - Pairwise Comparison</div>
+  </div>
+  <p style="text-align:center;">Round {{ round }} of {{ max_rounds }} - Which movie would you rather watch?</p>
+
+  <div style="display:flex; gap:2rem; margin-top:1.5rem; flex-wrap:wrap; justify-content:center;">
+
+    <form method="post" action="{% url 'project4:submit_pairwise' %}" style="flex:1; min-width:240px;">
+      {% csrf_token %}
+      <input type="hidden" name="winner" value="{{ movie1.idx }}">
+      <div style="background:#f5f8ff; border:2px solid #275CB2; border-radius:8px; padding:1.5rem; text-align:center;">
+        <h3>{{ movie1.title }}</h3>
+        <p>Year: {{ movie1.year }}</p>
+        <p>Genre: {{ movie1.genres }}</p>
+        <p>IMDB: {{ movie1.score }}</p>
+        <p>Director: {{ movie1.director }}</p>
+        <button type="submit" style="margin-top:1rem; width:100%;">I prefer this one</button>
+      </div>
+    </form>
+
+    <div style="display:flex; align-items:center; font-size:2rem; color:#999;">VS</div>
+
+    <form method="post" action="{% url 'project4:submit_pairwise' %}" style="flex:1; min-width:240px;">
+      {% csrf_token %}
+      <input type="hidden" name="winner" value="{{ movie2.idx }}">
+      <div style="background:#f5f8ff; border:2px solid #275CB2; border-radius:8px; padding:1.5rem; text-align:center;">
+        <h3>{{ movie2.title }}</h3>
+        <p>Year: {{ movie2.year }}</p>
+        <p>Genre: {{ movie2.genres }}</p>
+        <p>IMDB: {{ movie2.score }}</p>
+        <p>Director: {{ movie2.director }}</p>
+        <button type="submit" style="margin-top:1rem; width:100%;">I prefer this one</button>
+      </div>
+    </form>
+
+  </div>
+
+  <p style="text-align:center; color:#666; margin-top:1rem;">Round {{ round }} of {{ max_rounds }}</p>
+</div>
+{% endblock %}

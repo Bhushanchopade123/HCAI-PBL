@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="main-text">
+  <div class="title-container">
+    <div class="title">Your Recommendations</div>
+  </div>
+
+  <p>Based on your
+    {% if design == 'pairwise' %}
+      <strong>{{ n_comparisons }} pairwise comparisons</strong> (Design 1),
+    {% else %}
+      <strong>{{ n_rankings }} ranking rounds</strong> (Design 2),
+    {% endif %}
+    here are the top 5 movies we think you'll enjoy:
+  </p>
+
+  <ol style="padding-left:1.2rem;">
+    {% for m in recommendations %}
+    <li style="margin-bottom:1rem; background:#f5f8ff; border:2px solid #275CB2;
+               border-radius:8px; padding:1rem;">
+      <strong>{{ m.title }}</strong> ({{ m.year }})<br>
+      <span style="color:#555;">🎬 {{ m.genres }} &nbsp; ⭐ {{ m.score }} &nbsp; 🎥 {{ m.director }}</span>
+    </li>
+    {% endfor %}
+  </ol>
+
+  <h3>Learned Preference Weights</h3>
+  <p>These weights show what features your responses suggested you value most.
+     Blue = positive preference, Red = negative preference.</p>
+  <img src="data:image/png;base64,{{ weight_plot }}" style="max-width:100%;">
+
+  <div style="margin-top:1.5rem; display:flex; gap:1rem; flex-wrap:wrap;">
+    <a href="{% url 'project4:study' %}"><button>🔄 Try Again</button></a>
+    <a href="{% url 'project4:index' %}"><button>🏠 Back to Project 4</button></a>
+  </div>
+</div>
+{% endblock %}
